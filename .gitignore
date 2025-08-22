@@ -1,0 +1,6 @@
+.venv
+realtimesst.log
+*/__pycache__/*
+*.lock
+*/.env/*
+.env

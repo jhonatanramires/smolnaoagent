@@ -1,7 +1,13 @@
+from qi import Session
+from nao import Nao
+from dotenv import load_dotenv
+from os import getenv
 
-def autonomousBehavior(s: Session):
-  s.service("ALAutonomousLife").setState("disabled")  
-  s.service("ALAutonomousLife").setState("solitary")
-  s.service("ALBackgroundMovement").setEnabled(True)
-  s.service("ALSpeakingMovement").setMode("random")
-  s.service("ALSpeakingMovement").setEnabled(True)
+load_dotenv()
+
+s = Session()
+s.connect(f"tcp://{getenv("NAO_IP")}:{getenv("NAO_PORT")}")
+
+nao = Nao(s)
+
+def 
