@@ -1,26 +1,24 @@
-from smolagents import OpenAIServerModel, ToolCallingAgent
+from smolagents import LiteLLMModel, CodeAgent
 from dotenv import load_dotenv
 from os import getenv
 from langchain_community.chat_message_histories import SQLChatMessageHistory
 
 load_dotenv()
 
-key = getenv("API_KEY")
-
-print(key)
-
-def init_agent() -> ToolCallingAgent:
-    model = OpenAIServerModel(
-        model_id="deepseek-chat",
-        api_base="https://api.deepseek.com/v1",
-        api_key=key,
-        custom_role_conversions={"system": "system", "user": "user", "assistant": "assistant"}
+def init_agent(tools) -> CodeAgent:
+    model = LiteLLMModel(
+      model_id=getenv("MODEL_ID"),
+      api_key=getenv("DEEPSEEK_API_KEY"),
+      verbosity_level=getenv("VERBOSITY_LEVEL"),
+      instructions=getenv("INSTRUCTIONS"),
     )
-    return ToolCallingAgent(
-        tools=[],
-        model=model,
-        add_base_tools=True
+    agent = CodeAgent(
+      tools=tools,
+      additional_authorized_imports=getenv("ADDITIONAL_AUTHORIZED_IMPORTS", "").split(","),
+      model=model,
+      add_base_tools=bool(getenv("BASE_TOOLS"))
     )
+    return agent
 
 def format_message(role: str, content: str) -> str:
     """Compact message formatting to save tokens"""
