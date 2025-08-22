@@ -1,6 +1,4 @@
-import os
 from smolagents import OpenAIServerModel, ToolCallingAgent
-#from agent.tools import tools
 from dotenv import load_dotenv
 from os import getenv
 from langchain_community.chat_message_histories import SQLChatMessageHistory
@@ -63,13 +61,13 @@ def chat(session_id: str, user_query: str, system_prompt: str = None, max_contex
     compact_prompt = "\n".join(context_lines) + "\nA:"
     
     # Get response
-    response = agent.run(compact_prompt)
+    response = agent.run(str(compact_prompt))
 
     # Persist interaction
-    history.add_user_message(user_query)
-    history.add_ai_message(response)
-    
-    return response
+    history.add_user_message(str(user_query))
+    history.add_ai_message(str(response))
+
+    return str(response)
 
 if __name__ == "__main__":
     session = "user123"
