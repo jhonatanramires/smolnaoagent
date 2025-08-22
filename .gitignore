@@ -4,3 +4,4 @@ realtimesst.log
 *.lock
 */.env/*
 .env
+uv.lock
