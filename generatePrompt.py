@@ -6,10 +6,13 @@ def generate(prompt,nao):
     "1. Cuando te lo pidan directamente, en el momento en el que te lo piden directamente puedes tomar la postura que te pidieron solo despues de pedir una confimación directa " \
     "2.En base al contexto, cuando vas a decir algo y cierta postura seria ideal para expresar mejor lo que diras puedes antes de decirlo pedir tomar cierta postura. Debes tomar la postura y luego decir lo que ibas a decir. " \
     f"Las posturas que tienes disponibles son:{(nao.s.service("ALRobotPosture")).getPostureList()} """
+    print(postures)
+    return prompt+postures
 
 if __name__ == "__main__":
     from dotenv import load_dotenv
     from os import getenv
+    from nao.setupNao import setup_nao
 
     load_dotenv()
 
@@ -17,4 +20,4 @@ if __name__ == "__main__":
     IP = getenv("NAO_IP")
 
     nao = setup_nao(IP,PORT)
-    generate("hola",)
+    generate("hola",nao)

@@ -1,7 +1,5 @@
 .venv
 realtimesst.log
 */__pycache__/*
-*.lock
+*/*.lock/*
 */.env/*
-.env
-uv.lock

@@ -3,6 +3,7 @@ class Nao:
     self.s = session
     self.tts = self.s.service("ALAnimatedSpeech")
     self.audio = self.s.service("ALAudioDevice")
+    self.posture = self.s.service("ALRobotPosture")
 
   def speak(self, text):
     self.tts.say(text)
