@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from agent.main import chat
 from RealtimeSTT import AudioToTextRecorder
 from generatePrompt import generate
-from nao.tools import set_posture_to
+from nao.tools import set_posture_to, walk
 
 
 load_dotenv()
@@ -14,12 +14,12 @@ prompt = generate("Tu eres nao, el robot humanoide autonomo del SENA para desemp
 
 def main(userInput):
     print("User: ",userInput)
-    out = chat("user",userInput,"eres un robot",False,[set_posture_to])
+    out = chat("user",userInput,"eres un robot",[set_posture_to, walk])
     nao.speak(str(out))
     print("Agent: ",str(out))
 
 if __name__ == "__main__":
-    recorder = AudioToTextRecorder(wake_words="oye, nao",model="base")
+    recorder = AudioToTextRecorder(model="small")
     nao.autonomousBehavior()
     while True:
         recorder.text(main)

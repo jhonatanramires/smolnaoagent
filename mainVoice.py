@@ -6,10 +6,10 @@ prompt = ("Tu eres nao, el robot humanoide autonomo del SENA para desempeñar es
 
 def main(userInput):
     print("User: ",userInput)
-    out = chat("user",userInput,"eres un robot",False,[])
+    out = chat("user",userInput,"eres un robot",[])
     print("Agent: ",str(out))
 
 if __name__ == "__main__":
-    recorder = AudioToTextRecorder(model="base")
+    recorder = AudioToTextRecorder(model="small")
     while True:
         recorder.text(main)

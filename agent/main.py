@@ -1,4 +1,4 @@
-from smolagents import LiteLLMModel, CodeAgent
+from smolagents import LiteLLMModel, CodeAgent, Tool
 from dotenv import load_dotenv
 from os import getenv
 from langchain_community.chat_message_histories import SQLChatMessageHistory
@@ -14,7 +14,7 @@ def init_agent(tools) -> CodeAgent:
     )
     agent = CodeAgent(
       tools=tools,
-      additional_authorized_imports=getenv("ADDITIONAL_AUTHORIZED_IMPORTS", "").split(","),
+      additional_authorized_imports=(getenv("IMPORTS")).split(","),
       model=model,
       add_base_tools=bool(getenv("BASE_TOOLS"))
     )
@@ -24,8 +24,8 @@ def format_message(role: str, content: str) -> str:
     """Compact message formatting to save tokens"""
     return f"{role[0].upper()}: {content}"
 
-def chat(session_id: str, user_query: str, system_prompt: str = None, max_context_tokens: int = 3000) -> str:
-    agent = init_agent()
+def chat(session_id: str, user_query: str, system_prompt: str = None,tools: list[Tool] = [],max_context_tokens: int = 6000) -> str:
+    agent = init_agent(tools)
     history = SQLChatMessageHistory(
       session_id=session_id,
       connection="sqlite:///memory.db"
